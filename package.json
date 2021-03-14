@@ -1,0 +1,19 @@
+{
+  "name": "is-called",
+  "version": "1.0.0",
+  "description": "what to call things ",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "flare" : "echo NotDoingAnythingYet"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sam-heller/Is-Called.git"
+  },
+  "author": "sam@faitaccomp.li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sam-heller/Is-Called/issues"
+  },
+  "homepage": "https://github.com/sam-heller/Is-Called#readme"
+}
