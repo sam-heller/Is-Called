@@ -1,0 +1,23 @@
+{
+    "csv_in" : "setup/wikipedia.csv",
+    "json_out" : "build/animals.json", 
+    "cloudflare" : {
+        "email" : "",
+        "key" : "",
+        "zone_id": "",
+        "cname" : [
+            {"name": "young.*", "content": "@"},
+            {"name": "female.*", "content": "@"},
+            {"name": "male.*", "content": "@"},
+            {"name": "groupof.*", "content": "@"},
+            {"name": "meatfrom.*", "content": "@"}
+        ],
+        "txt" : {
+            "young" : "young.%animal%",
+            "female" : "female.%animal%",
+            "male" : "male.%animal%",
+            "group" : "groupof.%animal%",
+            "meat" : "meatfrom.%animal%"
+        }
+    }
+}

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "what to call things ",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "flare" : "echo NotDoingAnythingYet"
+    "test": "echo 'No Tests Yet'",
+    "flare": "node setup/setup.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/sam-heller/Is-Called/issues"
   },
-  "homepage": "https://github.com/sam-heller/Is-Called#readme"
+  "homepage": "https://github.com/sam-heller/Is-Called#readme",
+  "dependencies": {
+    "cloudflare": "^2.7.0",
+    "csv-parser": "^3.0.0"
+  }
 }
