@@ -1,0 +1,25 @@
+{
+    "csv_in" : "setup/wikipedia.csv",
+    "json_out" : "build/animals.json", 
+    "cloudflare" : {
+        "email" : "",
+        "key" : "",
+        "zoneId": "",
+        "accountId": "",
+        "kv" : {
+            "variableBinding": "CALLED",
+            "namespaceId": "",
+            "target" : "https://api.cloudflare.com/client/v4/accounts/:account/storage/kv/namespaces/:namespace/bulk"
+        },
+        "dns" : {
+            "ip" : "",
+            "domain" : "",
+            "mName" : "",
+            "rName" : "",
+            "serial" : "",
+            "soa" : ":domain.           3599    IN      SOA     :mName. :rName. :serial 10000 2400 604800 3600",
+            "a" : "*.:animal.:domain.   1   IN  A   :ip"
+
+        }
+    }
+}

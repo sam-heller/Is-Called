@@ -107,9 +107,9 @@ const csv = require('csv-parser');
      * @param {*} infile 
      * @param {*} outfile 
      */
-    buildDataFile(){
+     async buildDataFile(){
         const animals = [];
-        fs.createReadStream(this.infile)
+        return fs.createReadStream(this.infile)
         .pipe(csv())
         .on('data', (row) => {
             row = Object.assign(row, {'references': '', 'redirects':''})

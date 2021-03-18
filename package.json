@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "what to call things ",
   "scripts": {
-    "test": "echo 'No Tests Yet'",
-    "flare": "node setup/setup.js"
+    "build": "npm run buildData && npm run saveData",
+    "buildData": "node setup/setup.js build_data",
+    "saveData": "node setup/setup.js save_data"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,7 @@
   },
   "homepage": "https://github.com/sam-heller/Is-Called#readme",
   "dependencies": {
-    "cloudflare": "^2.7.0",
-    "csv-parser": "^3.0.0"
+    "csv-parser": "^3.0.0",
+    "node-fetch": "^2.6.1"
   }
 }
