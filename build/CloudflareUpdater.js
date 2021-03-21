@@ -1,7 +1,6 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 
-//"https://api.cloudflare.com/client/v4/accounts/:account/storage/kv/namespaces/:namespace/bulk" \
 /**
  * Class responsible for updating cloudflare records
  */
@@ -24,7 +23,7 @@ const fetch = require('node-fetch');
             },
             body: ''
         }
-        console.log(this.kvOptions)
+        console.log(this.kvTarget, this.kvOptions)
     }
 
     writeBulk(values) {
