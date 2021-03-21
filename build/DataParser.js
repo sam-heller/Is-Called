@@ -38,9 +38,6 @@ const csv = require('csv-parser');
 
     /**
      * Extract "see" redirects from animal name
-     * 
-     * @param {} row 
-     * @returns 
      */
     extractAnimalRedirect(row){
         if (row['animal'].includes('see') && !row['animal'].includes('also')){
@@ -54,10 +51,6 @@ const csv = require('csv-parser');
     /**
      * Extract contextual information for name
      * attributes and build the final object
-     * 
-     * @param {*} row 
-     * @param {*} key 
-     * @returns 
      */
     parseModifiers(row, key){
         let modified = {};
@@ -77,11 +70,6 @@ const csv = require('csv-parser');
         return row;
     }
 
-    /**
-     * 
-     * @param {*} row 
-     * @returns 
-     */
     splitData(row){
         for (let k in row){
             row[k] = row[k].split('||');
@@ -95,9 +83,7 @@ const csv = require('csv-parser');
      * Read in the CSV from wikipedia, parse it with 
      * the above helper functions, and write out
      * the final data JSON file
-     * 
-     * @param {*} infile 
-     * @param {*} outfile 
+     *
      */
      async buildDataFile(){
         const animals = [];
