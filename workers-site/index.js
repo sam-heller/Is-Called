@@ -1,4 +1,5 @@
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
+import {DataElementHandler, ListingElementHandler, MetadataHandler, JsonLdHandler, DeleteElementHandler} from "./HtmlRewriteHandlers"
 import pluralize from 'pluralize'
 
 addEventListener('fetch', event => {
@@ -13,7 +14,7 @@ async function handleRequest(event) {
   let response = await cache.match(cacheKey)
   if (!response) {
     response = await handleUncached(event)
-    response.headers.append("Cache-Control", "s-maxage=3600")
+    response.headers.append("Cache-Control", "s-maxage=60")
     event.waitUntil(cache.put(cacheKey, response.clone()))
   }
   return response
@@ -22,7 +23,7 @@ async function handleRequest(event) {
 async function handleUncached(event){
   const keys = new URL(event.request.url).host.split('.').slice(0,2)
   if (event.request.url.endsWith('.png')){return await getAssetFromKV(event, {})}
-  if (keys[0] == 'what'){return await listPage(event);}
+  if (keys[0] === 'what'){return await listPage(event);}
   else {return await infoPage(event, keys);}
 }
 
@@ -33,6 +34,8 @@ async function listPage(event){
       .on('title', new TitleElementHandler('Types of Things'))
       .on('#title', new TitleElementHandler('Tell me about'))
       .on('#options-wrap', new ListingElementHandler(data))
+      .on('meta[property]', new DeleteElementHandler())
+      .on('#jsonld', new DeleteElementHandler())
       .transform(page)
 }
 
@@ -44,6 +47,8 @@ async function infoPage(event, keys){
       .on('title', new TitleElementHandler(typeString))
       .on("#title", new TitleElementHandler(typeString))
       .on("#content", new DataElementHandler(data))
+      .on('#jsonld', new JsonLdHandler(typeString, keys[0], keys[1], data))
+      .on("meta", new MetadataHandler(typeString, event.request.url, data))
       .transform(page)
 }
 
@@ -67,40 +72,5 @@ class TitleElementHandler {
   }
   element(element){
     element.setInnerContent(this.typeString)
-  }
-}
-
-class DataElementHandler {
-  constructor(data){
-    this.data = data
-  }
-  element(element){
-    let content = '<div class="column tags is-multiline is-centered" id="content">'
-    for (let name in this.data){
-      if (this.data[name] === ""){content += `<span class="tag is-large">${name}</span>\n`}
-      else {content += `<span class="tag is-large">${name} (${this.data[name]})</span>\n`}
-    }
-    if(Object.values(this.data).length === 0){
-      content += "<span class='tag is-large'>🤷 I don't know this one either 🤷</span>"
-    }
-    content += '</div>'
-    element.setInnerContent(content, {html:true})
-  }
-}
-
-class ListingElementHandler {
-  constructor(data){
-    this.data = data
-  }
-  element(element){
-    let content = '<div class="select"><select id="animalSelect" onchange="buildLink()">';
-    for (let d of this.data){content += `<option>${d}</option>`}
-    content += "</select></div>"
-    content += "<div class='select'><select id='typeSelect' onchange='buildLink()'>"
-    for (let opt of ["group", "male", "female", "infant", "meat"]){
-      content += `<option>${opt}</option>`
-    }
-    content += "</select></div>"
-    element.setInnerContent(content, {html:true})
   }
 }

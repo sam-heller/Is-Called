@@ -31,7 +31,7 @@ API_TOKEN=<CLOUDFLARE API TOKEN>
 ```
 
 In order to update the Cloudflare KV store with the animal data, run the build script
-```
+```bash
  % npm run build
 
 > @1.0.0 build /Users/name/Dev/Is-Called
@@ -45,3 +45,16 @@ In order to update the Cloudflare KV store with the animal data, run the build s
 
 response setting bulk values :  { result: null, success: true, errors: [], messages: [] }
 ```
+
+## HtmlRewrite Handlers
+Content is generated via the [HTML Rewrite Handlers](https://developers.cloudflare.com/workers/runtime-apis/html-rewriter) defined in [workers-site/HtmlRewriteHandlers.js](https://github.com/sam-heller/Is-Called/blob/main/workers-site/HtmlRewriteHandlers.js). 
+### DataElementHandler
+Handles construction of the endpoint specific data, all it needs is the data object stored in the Cloudflare KV Store.
+### ListingElementHandler
+Builds the interface for the main page at what.iscalled.com. It pulls it's data from a listing of animal names stored in KV with the key `animals`
+### MetadataHandler
+Populates any html metadata entries on the page. Specific elements are matched via a case statement in the handlers element() function
+### LdJsonHandler
+Populates the [LdJson](https://json-ld.org/) object for the page. 
+### DeleteElementHandler
+Deletes any matched elements. Currently used to remove metadata for the site listing page. 
