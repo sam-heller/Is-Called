@@ -2,37 +2,45 @@
 <html>
     <head>
         <meta charset="utf-8">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" rel="stylesheet">
-        <script src="https://www.google.com/jsapi"></script>
-        <style>
-            @import "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma-rtl.min.css";
-        </style>
+        <style>@import "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma-rtl.min.css";</style>
+        <script type="text/javascript">
+            const buildLink = function(){
+                let target = `http://${document.querySelector('#animalSelect').value}.${document.querySelector('#typeSelect').value}.iscalled.com`
+                document.querySelector('#link').setAttribute('href', target)
+                document.querySelector('#link').innerHTML = target
+            }
+        </script>
+        <title></title>
     </head>
     <body>
         <div class="container">
-            <div class="columns">
-                <div class="column is-multiline is-centered">
-                    <h1 id='title' class="title has-text-centered"></h1>
+            <div class="section">
+                <div class="columns">
+                    <div class="column is-multiline is-centered">
+                        <h1 id='title' class="title has-text-centered"></h1>
+                    </div>
+                </div>
+                <div class="columns has-text-centered is-centered" id="content">
+                    <div id="options-wrap" class="column is-centered is-full"></div>
+                </div>
+                <div class="columns has-text-centered is-centered">
+                    <div class="column is-centered is-full">
+                        <h1 class="subtitle"><a id="link" href="#"></a></h1>
+                    </div>
                 </div>
             </div>
-            <div class="columns has-text-centered">
-                <div class="column tags is-multiline is-centered" id="names"></div>
-            </div>
         </div>
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <span class="is-size-7 has-text-weight-light is-italic"><a href="http://what.iscalled.com">what.iscalled.com</a></span>
+                |
+                <span class="is-size-7 has-text-weight-light is-italic"><a href="http://what.iscalled.com">Served up by <a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a></a></span>
+                |
+                <span class="is-size-7 has-text-weight-light is-italic">See how on <a href="https://github.com/sam-heller/Is-Called">Github</a></span>
+            </div>
+        </footer>
     </body>
-    <script type="text/javascript">
-        fetch(document.URL + "json")
-            .then(response => response.json())
-            .then(data => {
-                    document.querySelector("#title").innerHTML = data.title
-                    let content = '';
-                    for (let name in data.names){
-                        if (data['names'][name] == ""){content = content + `<span class="tag is-medium">${name}</span>\n`}
-                        else {content = content + `<span class="tag is-medium">${name} (${data['names'][name]})</span>\n`}
-                    }
-                    document.querySelector("#names").innerHTML = content
-                }
-            )
-    </script>
 </html>

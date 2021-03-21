@@ -23,7 +23,6 @@ const fetch = require('node-fetch');
             },
             body: ''
         }
-        console.log(this.kvTarget, this.kvOptions)
     }
 
     writeBulk(values) {
@@ -35,16 +34,18 @@ const fetch = require('node-fetch');
 
     async writeKeystore() {
         let toData = [];
+        let animalNames = [];
         for (let entry of this.animals) {
             for (let name of Object.keys(entry.animal)) {
-                toData.push({key: `${name}.infant`, value: JSON.stringify(entry.young)});
+                toData.push({key: `${name}.infant`, value: JSON.stringify(entry.infant)});
                 toData.push({key: `${name}.female`, value: JSON.stringify(entry.female)});
                 toData.push({key: `${name}.male`, value: JSON.stringify(entry.male)});
                 toData.push({key: `${name}.group`, value: JSON.stringify(entry.group)});
                 toData.push({key: `${name}.meat`, value: JSON.stringify(entry.meat)});
+                animalNames.push(name);
             }
         }
-
+        toData.push({key: 'animals', value: JSON.stringify(animalNames)});
         toData = JSON.stringify(toData);
         return await this.writeBulk(toData)
     }
