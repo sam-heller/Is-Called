@@ -78,7 +78,7 @@ class DataElementHandler {
     let content = '<div class="column tags is-multiline is-centered" id="content">'
     for (let name in this.data){
       if (this.data[name] === ""){content += `<span class="tag is-large">${name}</span>\n`}
-      else {content += `<span class="tag is-large">${name} (of ${this.data[name]})</span>\n`}
+      else {content += `<span class="tag is-large">${name} (${this.data[name]})</span>\n`}
     }
     if(Object.values(this.data).length === 0){
       content += "<span class='tag is-large'>🤷 I don't know this one either 🤷</span>"
