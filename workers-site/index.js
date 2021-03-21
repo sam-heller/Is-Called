@@ -82,7 +82,7 @@ async function sitemapXml(){
 
 
 function getTypeString(type, animal){
-  let animalCap = animal.charAt(0).toUpperCase() + animal.slice(1)
+  let animalCap = animal.charAt(0).toUpperCase() + animal.slice(1).replace('-', ' ')
   let animalString = pluralize(animalCap)
   let connectorString = animal.length === animalString.length ? 'are' : 'is';
   switch (type){

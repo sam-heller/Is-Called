@@ -15,7 +15,7 @@
         <script id="jsonld" type="application/ld+json"></script>
         <script type="text/javascript">
             const buildLink = function(){
-                let target = `http://${document.querySelector('#animalSelect').value}.${document.querySelector('#typeSelect').value}.iscalled.com`
+                let target = `http://${document.querySelector('#animalSelect').value}.${document.querySelector('#typeSelect').value}.iscalled.com`.replace(' ', '-')
                 document.querySelector('#link').setAttribute('href', target)
                 document.querySelector('#link').innerHTML = target
             }
