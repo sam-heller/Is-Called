@@ -1,5 +1,5 @@
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
-import {DataElementHandler, ListingElementHandler, MetadataHandler, JsonLdHandler, DeleteElementHandler} from "./HtmlRewriteHandlers"
+import {DataElementHandler, ListingElementHandler, MetadataHandler, JsonLdHandler, DeleteElementHandler, InnerContentHandler} from "./HtmlRewriteHandlers"
 import pluralize from 'pluralize'
 
 addEventListener('fetch', event => {
@@ -22,7 +22,7 @@ async function handleRequest(event) {
 
 async function handleUncached(event){
   const keys = new URL(event.request.url).host.split('.').slice(0,2)
-  if (event.request.url.endsWith('.png')){return await getAssetFromKV(event, {})}
+       if (event.request.url.endsWith('.png')){return await getAssetFromKV(event, {})}
   else if (event.request.url.endsWith('robots.txt')){return new Response('Sitemap: http://what.iscalled.com/sitemap.txt', {})}
   else if (event.request.url.endsWith('sitemap.txt')){return await sitemapText()}
   else if (event.request.url.endsWith('sitemap.xml')){return await sitemapXml()}
@@ -34,8 +34,8 @@ async function listPage(event){
   const data = JSON.parse(await CALLED.get('animals'))
   const page = await getAssetFromKV(event, {})
   return new HTMLRewriter()
-      .on('title', new TitleElementHandler('Types of Things'))
-      .on('#title', new TitleElementHandler('Tell me about'))
+      .on('title', new InnerContentHandler('Types of Things'))
+      .on('#title', new InnerContentHandler('Tell me about'))
       .on('#options-wrap', new ListingElementHandler(data))
       .on('meta[property]', new DeleteElementHandler())
       .on('#jsonld', new DeleteElementHandler())
@@ -47,26 +47,12 @@ async function infoPage(event, keys){
   const page = await getAssetFromKV(event, {})
   const typeString = getTypeString(keys[1], keys[0])
   return new HTMLRewriter()
-      .on('title', new TitleElementHandler(typeString))
-      .on("#title", new TitleElementHandler(typeString))
+      .on('title', new InnerContentHandler(typeString))
+      .on("#title", new InnerContentHandler(typeString))
       .on("#content", new DataElementHandler(data))
       .on('#jsonld', new JsonLdHandler(typeString, keys[0], keys[1], data))
       .on("meta", new MetadataHandler(typeString, event.request.url, data))
       .transform(page)
-}
-
-function getTypeString(type, animal){
-  let animalCap = animal.charAt(0).toUpperCase() + animal.slice(1)
-  let animalString = pluralize(animalCap)
-  let connectorString = animal.length === animalString.length ? 'are' : 'is';
-  switch (type){
-    case 'group': return `A Group of ${animalString} ${connectorString} called`
-    case 'meat': return `Meat from a ${animalCap} is called`
-    case 'female': return `A Female ${animalCap} is called`
-    case 'male': return `A Male ${animalCap} is called`
-    case 'infant': return `An Infant ${animalCap} is called`
-    default: return `I don't know anything about ${animalString} ${type}`
-  }
 }
 
 async function sitemapText(){
@@ -94,11 +80,18 @@ async function sitemapXml(){
   return new Response(xml, {});
 }
 
-class TitleElementHandler {
-  constructor(typeString){
-    this.typeString = typeString
-  }
-  element(element){
-    element.setInnerContent(this.typeString)
+
+function getTypeString(type, animal){
+  let animalCap = animal.charAt(0).toUpperCase() + animal.slice(1)
+  let animalString = pluralize(animalCap)
+  let connectorString = animal.length === animalString.length ? 'are' : 'is';
+  switch (type){
+    case 'group': return `A Group of ${animalString} ${connectorString} called`
+    case 'meat': return `Meat from a ${animalCap} is called`
+    case 'female': return `A Female ${animalCap} is called`
+    case 'male': return `A Male ${animalCap} is called`
+    case 'infant': return `An Infant ${animalCap} is called`
+    default: return `I don't know anything about ${animalString} ${type}`
   }
 }
+

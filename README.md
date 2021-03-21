@@ -56,5 +56,7 @@ Builds the interface for the main page at what.iscalled.com. It pulls it's data 
 Populates any html metadata entries on the page. Specific elements are matched via a case statement in the handlers element() function
 ### LdJsonHandler
 Populates the [LdJson](https://json-ld.org/) object for the page. 
+### InnerContentHandler
+Generic handler to replace the inner content of the matched elements with the string provided to the constructor.
 ### DeleteElementHandler
 Deletes any matched elements. Currently used to remove metadata for the site listing page. 

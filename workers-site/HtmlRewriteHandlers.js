@@ -72,10 +72,20 @@ class JsonLdHandler {
     }
 }
 
+class InnerContentHandler {
+    constructor(contentString){
+        this.contentString = contentString
+    }
+    element(element){
+        element.setInnerContent(this.contentString)
+    }
+}
+
+
 class DeleteElementHandler{
     element(element){
         element.remove()
     }
 }
 
-export {DataElementHandler, ListingElementHandler, MetadataHandler, JsonLdHandler, DeleteElementHandler}
+export {DataElementHandler, ListingElementHandler, MetadataHandler, JsonLdHandler, DeleteElementHandler, InnerContentHandler}
