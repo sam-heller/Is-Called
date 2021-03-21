@@ -1,24 +1,25 @@
 {
-  "name": "is-called",
+  "private": true,
   "version": "1.0.0",
-  "description": "what to call things ",
+  "description": "Build the Data",
+  "main": "build/setup.js",
   "scripts": {
     "build": "npm run buildData && npm run saveData",
-    "buildData": "node setup/setup.js build_data",
-    "saveData": "node setup/setup.js save_data"
+    "buildData": "node build/setup.js build_data",
+    "saveData": "node build/setup.js save_data",
+    "dev": "nodemon -e js --watch workers-site/index.js --watch public/index.html --exec \"wrangler publish\"\n",
+    "startLogs": "killall -HUP wrangler & wrangler tail | sed -e 's/\\\\\\\"//g' > tailed.logs &",
+    "tail": "tail -f tailed.logs | ./node_modules/node-jq/bin/jq",
+    "tail:all": "npm run tail '{\"ts\": .eventTimestamp, \"url\" : .event.request.url, \"outcome\" : .outcome, \"exceptions\" : .exceptions, \"logs\" : [.logs[].message[]]}'"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/sam-heller/Is-Called.git"
-  },
-  "author": "sam@faitaccomp.li",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/sam-heller/Is-Called/issues"
-  },
-  "homepage": "https://github.com/sam-heller/Is-Called#readme",
   "dependencies": {
     "csv-parser": "^3.0.0",
-    "node-fetch": "^2.6.1"
+    "dotenv": "^8.2.0",
+    "node-fetch": "^2.6.1",
+    "pluralize": "^8.0.0"
+  },
+  "devDependencies": {
+    "node-jq": "^1.12.0",
+    "nodemon": "^2.0.7"
   }
 }

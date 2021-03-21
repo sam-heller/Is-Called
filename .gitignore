@@ -1,2 +1,7 @@
 build/*.json
 node_modules
+.env
+.cargo-ok
+tailed.logs
+dist
+.idea

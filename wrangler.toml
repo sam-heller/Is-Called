@@ -1,0 +1,12 @@
+name = "called"
+type = "webpack"
+account_id = "93ff523463821408b1e16cb2a064f3c7"
+workers_dev = true
+routes = ["*.meat.arecalled.com/*", "*.male.arecalled.com/*", "*.female.arecalled.com/*", "*.group.arecalled.com/*", "*.infant.arecalled.com/*"]
+zone_id = "b987a4fb83d3bb403107b8a8cdda3226"
+kv_namespaces = [  { binding = "CALLED", id = "e2ad63645fb440739b4166a1c077dff2"}]
+vars = {CSV_IN = "build/wikipedia.csv", JSON_OUT = "build/animals.json"}
+
+[site]
+bucket = "./public"
+entry-point = "./workers-site"
