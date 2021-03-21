@@ -45,8 +45,8 @@ class MetadataHandler {
     element(element){
         switch(element.getAttribute('property')){
             case 'og:site_name' : element.setAttribute('content', 'Is Called'); break;
-            case 'og:title' : element.setAttribute('content', this.typeString); break;
-            case 'og:description' : element.setAttribute('content', `${this.typeString} ${Object.keys(this.data).join(', ')}`); break;
+            case 'og:title' : element.setAttribute('content', `${this.typeString} a ${Object.keys(this.data).join(', ')}`); break;
+            case 'og:description' : element.setAttribute('content', `${this.typeString} a ${Object.keys(this.data).join(', ')}`); break;
             case 'og:url' : element.setAttribute('content', this.url); break;
             case 'article:published_time' : element.setAttribute('content', '2021-03-21T08:00:00.000Z'); break;
         }
@@ -59,10 +59,10 @@ class JsonLdHandler {
             "@context": "https://schema.org",
             "@type": "Article",
             "author": {"@type": "Person", "name": "Sam Heller", "url": "https://www.github.com/sam-heller/",},
-            "headline": `${animal} ${type} is called`,
+            "headline": `${typeString} a ${Object.keys(names).join(', ')}`,
             "url": `http://${animal}.${type}.iscalled.com`,
             "datePublished": "2021-03-21T08:00:00.000Z",
-            "description": `${typeString} ${Object.keys(names).join(', ')}`,
+            "description": `${typeString} a ${Object.keys(names).join(', ')}`,
             "mainEntityOfPage": {"@type": "WebPage", "@id": "http://what.iscalled.com/"}
         }
     }
