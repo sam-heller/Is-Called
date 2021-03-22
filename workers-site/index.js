@@ -7,6 +7,39 @@ addEventListener('fetch', event => {
   event.respondWith(handleRequest(event))
 })
 
+addEventListener('scheduled', event => {
+  event.waitUntil(handleScheduled(event))
+})
+
+async function handleScheduled(event){
+  const keys = await IMG_QUEUE.list()
+  for (let k of Object.values(keys)){
+    event.waitUntil(cacheImage(k))
+  }
+}
+
+async function cacheImage(animal){
+  try {
+    await IMG_QUEUE.delete(k)
+    let url = `https://api.unsplash.com/search/photos?per_page=50&page=1&query=${animal}`
+    let options = {headers: {"Authorization" : `Client-ID ${UNSPLASH_KEY}`}}
+    console.log("Starting Fetch", url, options)
+    const response = await fetch(url, options);
+    console.log("Respoonse retrieved", response);
+    const raw = await response.json()
+    console.log("Response json parsed", raw)
+    const result = JSON.parse(raw)
+    console.log("Image results", result)
+    let images = []
+    for (let i of result.results){
+      images.push({'img_url': i['urls']['raw'], 'user_name': i['user']['name'], 'user_url': i['user']['links']['html']})
+    }
+    console.log("Images parsed", images);
+    return CALLED.put(`${animal}.images`, JSON.stringify(images))
+  } catch (e){console.log("Fetch of image failed")}
+}
+
+
 async function handleRequest(event) {
   const request = event.request
   const cacheUrl = new URL(request.url)
