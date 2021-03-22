@@ -1,5 +1,6 @@
 const DataParser = require('./DataParser');
 const CloudflareUpdater = require('./CloudflareUpdater')
+const ImageCache = require('./ImageCacheWarmer')
 require('dotenv').config()
 
 switch(process.argv[2]){
@@ -10,6 +11,10 @@ switch(process.argv[2]){
     case 'save_data' :
         let updater = new CloudflareUpdater();
         updater.writeKeystore();
+        break;
+    case 'cache_warm' :
+        let cache = new ImageCache()
+        cache.go()
         break;
     default:
         console.log(`Unknown step ${process.argv[2]}`)

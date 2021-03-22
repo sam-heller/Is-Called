@@ -7,19 +7,31 @@
     "build": "npm run buildData && npm run saveData",
     "buildData": "node build/setup.js build_data",
     "saveData": "node build/setup.js save_data",
-    "dev": "nodemon -e js --watch workers-site/index.js --watch public/index.html --exec \"wrangler publish\"\n",
+    "setup" : "node build/setup.jscac",
+    "dev": "nodemon",
     "startLogs": "killall -HUP wrangler & wrangler tail | sed -e 's/\\\\\\\"//g' > tailed.logs &",
     "tail": "tail -f tailed.logs | ./node_modules/node-jq/bin/jq",
     "tail:all": "npm run tail '{\"ts\": .eventTimestamp, \"url\" : .event.request.url, \"outcome\" : .outcome, \"exceptions\" : .exceptions, \"logs\" : [.logs[].message[]]}'"
   },
   "dependencies": {
+    "bsplit": "^1.0.1",
     "csv-parser": "^3.0.0",
-    "dotenv": "^8.2.0",
     "node-fetch": "^2.6.1",
-    "pluralize": "^8.0.0"
+    "pluralize": "^8.0.0",
+    "split-buffer": "^1.0.0"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "node-jq": "^1.12.0",
     "nodemon": "^2.0.7"
+  },
+  "nodemonConfig": {
+    "ext": "*.js",
+    "ignore": [
+      "workers-site/worker/*",
+      "dist/*",
+      "build/*"
+    ],
+    "exec": "wrangler publish"
   }
 }

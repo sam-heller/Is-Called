@@ -1,53 +1,68 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>@import "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma-rtl.min.css";</style>
-        <meta property="og:site_name" content="" />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="" />
-        <meta property="og:description" content="" />
-        <meta property="og:url" content="" />
-        <meta property="article:published_time" content="" />
-        <script id="jsonld" type="application/ld+json"></script>
-        <script type="text/javascript">
-            const buildLink = function(){
-                let target = `http://${document.querySelector('#animalSelect').value}.${document.querySelector('#typeSelect').value}.iscalled.com`
-                document.querySelector('#link').setAttribute('href', target)
-                document.querySelector('#link').innerHTML = target
-            }
-        </script>
-        <title></title>
-    </head>
-    <body>
-        <div class="container">
-            <div class="section">
-                <div class="columns">
-                    <div class="column is-multiline is-centered">
-                        <h1 id='title' class="title has-text-centered"></h1>
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>@import "https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma-rtl.min.css";</style>
+    <meta property="og:site_name" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="" />
+    <meta property="og:description" content="" />
+    <meta property="og:url" content="" />
+    <meta property="og:image" content=""/>
+    <meta property="article:published_time" content="" />
+    <script id="jsonld" type="application/ld+json"></script>
+    <script type="text/javascript">
+        const buildLink = function(){
+            let target = `http://${document.querySelector('#animalSelect').value}.${document.querySelector('#typeSelect').value}.iscalled.com`.replace(' ', '-')
+            document.querySelector('#link').setAttribute('href', target)
+            document.querySelector('#link').innerHTML = target
+        }
+    </script>
+    <script>var clicky_site_ids = clicky_site_ids || []; clicky_site_ids.push(101307628);</script>
+    <script async src="//static.getclicky.com/js"></script>
+    <title></title>
+</head>
+<body>
+<div class="container">
+    <section class="section">
+        <div class="card">
+            <div class="card-content">
+                <div class="media ">
+                    <div class="media-left">
+                        <figure class="image">
+                            <img src="/dot.gif" data-size="256"></img>
+                        </figure>
                     </div>
-                </div>
-                <div class="columns has-text-centered is-centered" id="content">
-                    <div id="options-wrap" class="column is-centered is-full"></div>
-                </div>
-                <div class="columns has-text-centered is-centered">
-                    <div class="column is-centered is-full">
-                        <h1 class="subtitle"><a id="link" href="#"></a></h1>
+                    <div class="media-content has-text-centered" style="overflow:visible;">
+                        <p id='title' class="title is-4"></p>
+                        <div id="content" class="has-text-centered is-centered is-multiline tags" style="overflow:visible;">
+
+
+                        </div>
+                        <div class="has-text-centered is-centered">
+                            <p><a id="link" href="http://what.iscalled.com"></a></p>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-        <footer class="footer">
-            <div class="content has-text-centered">
-                <span class="is-size-7 has-text-weight-light is-italic"><a href="http://what.iscalled.com">what.iscalled.com</a></span>
-                |
-                <span class="is-size-7 has-text-weight-light is-italic">Served up by <a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a></span>
-                |
-                <span class="is-size-7 has-text-weight-light is-italic">See how on <a href="https://github.com/sam-heller/Is-Called">Github</a></span>
-            </div>
-        </footer>
-    </body>
+    </section>
+</div>
+<footer class="footer">
+    <div class="content has-text-centered">
+        <span class="is-size-7 has-text-weight-light is-italic"><a href="http://what.iscalled.com">what.iscalled.com</a></span>
+        |
+        <span class="is-size-7 has-text-weight-light is-italic">Served up by <a href="https://developers.cloudflare.com/workers/">Cloudflare Workers</a></span>
+        |
+        <span class="is-size-7 has-text-weight-light is-italic">Images from <a href="https://unsplash.com/?utm_source=is_called&utm_medium=referral">Unsplash</a></span>
+        |
+        <span class="is-size-7 has-text-weight-light is-italic">See how on <a href="https://github.com/sam-heller/Is-Called">Github</a></span>
+    </div>
+</footer>
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7fac3c89b2c4413db664581a94de43e1"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
 </html>
