@@ -1,7 +1,8 @@
-build/*.json
+build/data/*.json
 node_modules
 .env
 .cargo-ok
 tailed.logs
 dist
 .idea
+.DS_STORE

@@ -1,38 +1,17 @@
 const fs = require('fs');
-const fetch = require('node-fetch');
+const CloudflareAPI = require('../../lib/CloudflareAPI')
 
 /**
  * Class responsible for updating cloudflare records
  */
  class CloudflareUpdater {
-    animals;
-    kvOptions;
-    kvTarget;
-
+    
     constructor() {
         this.animals = JSON.parse(fs.readFileSync('build/animals.json'), 'utf-8');
-        this.kvTarget = process.env.UPDATE_TEMPLATE
-            .replace(':account', process.env.ACCOUNT_ID)
-            .replace(':namespace', process.env.NAMESPACE_ID)
-        this.kvOptions = {
-            method: 'PUT',
-            headers: {
-                "X-Auth-Email": process.env.API_EMAIL,
-                "X-Auth-Key": process.env.API_TOKEN,
-                "Content-Type": 'application/json'
-            },
-            body: ''
-        }
+        this.api = new CloudflareAPI()
     }
 
-    writeBulk(values) {
-        this.kvOptions.body = values;
-        return fetch(this.kvTarget, this.kvOptions)
-            .then(res => res.json())
-            .then(json => console.log(`response setting bulk values : `, json))
-    }
-
-    async writeKeystore() {
+    async go() {
         let toData = [];
         let animalNames = [];
         for (let entry of this.animals) {
@@ -46,8 +25,7 @@ const fetch = require('node-fetch');
             }
         }
         toData.push({key: 'animals', value: JSON.stringify(animalNames)});
-        toData = JSON.stringify(toData);
-        return await this.writeBulk(toData)
+        return await this.api.putBulk(toData)
     }
 }
 
