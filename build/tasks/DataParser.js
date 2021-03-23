@@ -72,6 +72,7 @@ const csv = require('csv-parser');
 
     splitData(row){
         for (let k in row){
+            console.log(row, k, row[k])
             row[k] = row[k].split('||');
             row[k].map((s) => {return s.trim()})
             row[k] = row[k].filter((el) => {return el != ''})

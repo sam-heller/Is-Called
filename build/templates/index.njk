@@ -2,44 +2,44 @@
 <html>
     <head>
         <!-- HeadFirst -->
-{% include "component/head/first.nj" %}
+{% include "component/head/first.njk" %}
         <!--/HeadFirst -->
 
         <!-- HeadMeta -->
-{% include "component/head/meta.nj" %}
+{% include "component/head/meta.njk" %}
         <!--/HeadMeta -->
 
         <!-- HeadStyle -->
-{% include "component/head/style.nj" %}
+{% include "component/head/style.njk" %}
         <!--/HeadStyle -->
 
         <!-- HeadScript -->
-{% include "component/head/script.nj" %}
+{% include "component/head/script.njk" %}
         <!--/HeadScript -->
 
         <!-- HeadLast -->
-{% include "component/head/last.nj" %}
+{% include "component/head/last.njk" %}
         <!--/HeadLast -->
     </head>
     <body class="is-align-content-center">
         <!-- BodyFirst -->
-{% include "component/body/first.nj" %}
+{% include "component/body/first.njk" %}
         <!--/BodyFirst -->
 
         <!-- Page Header -->
-{% include "component/body/header.nj" %}
+{% include "component/body/header.njk" %}
         <!--/Page Header -->
 
         <!-- Content Section -->
-        Content Goes Here
+{{content}}
         <!--/Content Section -->
 
         <!-- Footer -->
-{% include "component/body/footer.nj" %}
+{% include "component/body/footer.njk" %}
         <!--/Footer -->
 
         <!-- BodyLast -->
-{% include "component/body/last.nj" %}
+{% include "component/body/last.njk" %}
         <!--/BodyLast -->
     </body>
 </html>

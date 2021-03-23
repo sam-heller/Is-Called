@@ -3,15 +3,14 @@ const nunjucks = require('nunjucks');
 const unsplash = require('unsplash-js')
 const minify = require('html-minifier').minify
 const CloudflareAPI = require('../../lib/CloudflareAPI')
-const Bottleneck = require('bottleneck')
-
+require('../../lib/over-engineering')
 class TemplateBuilder {
-    unsplash_available = false
+    unsplash_available = true
+    
     constructor(){
-        nunjucks.configure(process.cwd() + '/build/templates')
+        nunjucks.configure(process.cwd() + '/build/templates', {autoescape: false})
         this.unsplash = unsplash.createApi({accessKey: process.env.UNSPLASH_KEY, fetch: fetch})
         this.cloudflare = new CloudflareAPI()
-        this.limiter = new Bottleneck({minTime: 1000,maxConcurrent: 1});
     }
 
     async go(){
@@ -19,31 +18,54 @@ class TemplateBuilder {
         await this.buildDetailPages(data)
     }
 
-    async buildDetailPages(data){
+    async buildDetailPages(data, file_out=true, cloudflare_out=false){
+        let pages = []
         for (let entry of data){
             let values = {animal: Object.keys(entry.animal)[0],tags: []}
             values.img = await(this.getImage(values.animal))
             values.plural = values.animal.pluralize()
             values.connector = values.animal.length == values.plural.length ? 'are' : 'is'
             for  (let type of ['group', 'male', 'female', 'infant', 'meat']){
-                try {
-                     await this.limiter.schedule(() => this.renderAndStoreDetailPage(entry, values, type))
-                    this.build
-                } catch (e){
-                    objlog("Exception saving page", e)
+                values.tags = [];
+                for(let group of Object.keys(entry[type])){
+                    values.tags.push({name: group, sub: entry[type][group]})
+                }                                     
+                let infoCard = await this.renderInfoCard(entry, values, type)
+                let infoPage = await this.renderPage({content: infoCard, entry: entry})
+                if (cloudflare_out){pages.append({key: `${values.animal}.${type}`, page: infoPage})}
+                if (file_out){
+                     fs.writeFileSync(process.cwd() + `/public/detail-pages/${values.animal}.${type}.html`, infoPage)
                 }
+                // console.log(infoPage);
             }
         }
-    } 
+    }
 
-    async renderAndStoreDetailPage(entry, values, type){
-        values.tags = [];
-        for(let group of Object.keys(entry[type])){
-            values.tags.push({name: group, sub: entry[type][group]})
+    async renderPage(data, minify=false){
+        try {
+            let content = await nunjucks.render('index.njk', data)
+            if (minify){
+                content = minify(content, {minifyCSS: true, minifyJS: true, collapseWhitespace: true, removeComments: true})
+            }
+            return content            
+        } catch (e){
+            objlog("Error rendering Detail component", e)
+            return ""
         }
-        let content = nunjucks.render('content/detail-card.njk',values)
-        content = minify(content, {minifyCSS: true, minifyJS: true, collapseWhitespace: true, removeComments: true})
-        this.cloudflare.putValue(`${values.animal}.${type}.iscalled.com`, content, 'content', false);
+    }
+
+    async renderInfoCard(entry, values, type, minify=false){
+        try {
+            let content = nunjucks.render('content/detail-card.njk', values)
+            if (minify){
+                content = minify(content, {minifyCSS: true, minifyJS: true, collapseWhitespace: true, removeComments: true})
+            }
+            return content
+        } catch (e) {
+            objlog("Error rendering Detail component", e)
+            return ""
+        }
+        
     }
 
     async getImage(animal){
