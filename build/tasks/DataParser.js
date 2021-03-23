@@ -85,9 +85,9 @@ const csv = require('csv-parser');
      * the final data JSON file
      *
      */
-     async buildDataFile(){
+     async go(){
         const animals = [];
-        return fs.createReadStream('build/wikipedia.csv')
+        return fs.createReadStream('build/data/wikipedia.csv')
         .pipe(csv())
         .on('data', (row) => {
             row = Object.assign(row, {'references': '', 'redirects':''})
@@ -101,7 +101,7 @@ const csv = require('csv-parser');
             animals.push(row);
         })
         .on('end', () => {
-            fs.writeFileSync('build/animals.json', JSON.stringify(animals))
+            fs.writeFileSync('build/data/animals.json', JSON.stringify(animals))
         })
     }
 

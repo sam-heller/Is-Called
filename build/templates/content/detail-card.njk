@@ -1,0 +1,50 @@
+
+<!-- Item Detail Section -->
+<section class="is-align-content-center	">
+    <container class="is-align-content-center">
+        <div class="tile is-ancestor">
+            <div class="tile is-vertical is-12">
+                <!-- Item Title -->
+                <div class="tile is-parent is-12 is-align-content-center">
+                    <article class="tile is-child notification">
+                        <p id="item-title" class="title">
+                            {% if   type == "group"  %} A Group of {{plural | capitalize }} {{connector}} called
+                            {% elif type == "meat"   %} Meat from a {{plural | capitalize}} is called
+                            {% elif type == "female" %} A Female {{plural | capitalize}} is called
+                            {% elif type == "male"   %} A Male {{plural | capitalize}} is called
+                            {% elif type == "infant" %} An Infant {{plural | capitalize}} is called
+                            {% else                  %} I don't know anything about {{plural | capitalize}} {{type}}
+                            {% endif                 %}
+                        </p>
+                    </article>
+                </div>
+                <div class="tile">
+                    <!-- Item Image -->
+                    <div class="tile is-parent is-4">
+                        <article class="tile is-child notification">
+                            <figure id="image-wrap" class="image is-1by1">
+                                <imgs src="{{image.img_url}}"/>
+                            </figure>
+                            <figcaption id="image-attribution" class="is-size-7 has-text-weight-light is-italic">
+                                Photo by <a href="{{img.user_url}}?utm_source=is_called&utm_medium=referral">{{img.user_name}}</a> on <a href="https://unsplash.com?utm_source=is_called&utm_medium=referral">Unsplash</a>
+                            </figcaption>
+                        </article>
+                    </div>
+                    <!-- Item Tags -->
+                    <div class="tile is-parent is-vertical">
+                        <article class="tile is-child notification">
+                            <div id="name-tags" class="tile tags subtitle is-multiline">
+                                {% for tag in tags %}
+                                     <span class="tag is-large" data-tooptip="{{tag.sub}}">{{tag.name}}</span>
+                                {% else %}
+                                    <span class='tag is-large'>🤷 I don't know this one either 🤷</span>
+                                {% endfor %}
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </container>
+</section>
+<!--/Item Detail Section-->
