@@ -8,12 +8,12 @@
                         <div class="tile is-parent is-12 is-align-content-center">
                             <article class="tile is-child notification">
                                 <p id="item-title" class="title">
-                                    {% if   type == "group"  %} A Group of {{plural | capitalize }} {{connector}} called
-                                    {% elif type == "meat"   %} Meat from a {{plural | capitalize}} is called
-                                    {% elif type == "female" %} A Female {{plural | capitalize}} is called
-                                    {% elif type == "male"   %} A Male {{plural | capitalize}} is called
-                                    {% elif type == "infant" %} An Infant {{plural | capitalize}} is called
-                                    {% else                  %} I don't know anything about {{plural | capitalize}} {{type}}
+                                    {% if   type == "group"  %} A Group of {{plural | replace("-"," ") | capitalize }} {{connector}} called
+                                    {% elif type == "meat"   %} Meat from a {{animal | replace("-"," ") |capitalize}} is called
+                                    {% elif type == "female" %} A Female {{animal | replace("-"," ") |capitalize}} is called
+                                    {% elif type == "male"   %} A Male {{animal | replace("-"," ") |capitalize}} is called
+                                    {% elif type == "infant" %} An Infant {{animal | replace("-"," ") |capitalize}} is called
+                                    {% else                  %} I don't know anything about {{plural | replace("-"," ") |capitalize}} {{type}}
                                     {% endif                 %}
                                 </p>
                             </article>
@@ -22,11 +22,12 @@
                             <!-- Item Image -->
                             <div class="tile is-parent is-4">
                                 <article class="tile is-child notification">
+                                    {% set image = images | random %}
                                     <figure id="image-wrap" class="image is-1by1">
-                                        <imgs src="{{image.image_url}}"/>
+                                        <img src="{{image.img_url}}&w=256&h=256&crop=focalpoint&dpi=2&fit=crop&ar=1:1"/>
                                     </figure>
                                     <figcaption id="image-attribution" class="is-size-7 has-text-weight-light is-italic">
-                                        Photo by <a href="{{img.user_url}}?utm_source=is_called&utm_medium=referral">{{img.user_name}}</a> on <a href="https://unsplash.com?utm_source=is_called&utm_medium=referral">Unsplash</a>
+                                        Photo by <a href="{{image.user_url}}?utm_source=is_called&utm_medium=referral">{{image.user_name}}</a> on <a href="https://unsplash.com?utm_source=is_called&utm_medium=referral">Unsplash</a>
                                     </figcaption>
                                 </article>
                             </div>
