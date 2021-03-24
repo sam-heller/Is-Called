@@ -10,13 +10,13 @@ const CloudflareAPI = require('../lib/CloudflareAPI');
 class Setup {
     async run(job){
         switch(job){
-            case 'build_data'      : await new DataParser().go();        break;
-            case 'save_data'       : await new CloudflareUpdater().go(); break;
-            // case 'cache_warm'      : await new ImageCache().go();        break;
-            case 'build_templates' : await new TemplateBuilder().go();   break;
-            case 'save_secrets'    : await new Secrets().go();           break;
-            case 'all'             : await this.runAll();                break;
-            default: console.log(`Unknown step ${job}`); await this.test();                break;
+            case 'build_data'      : await new DataParser().go();            break;
+            case 'save_data'       : await new CloudflareUpdater().go();     break;
+            case 'build_templates' : await new TemplateBuilder().go();       break;
+            case 'save_secrets'    : await new Secrets().go();               break;
+            case 'image_update'    : await this.rebuild();                   break;
+            case 'all'             : await this.runAll();                    break;
+            default: console.log(`Unknown step ${job}`); await this.test();  break;
         }
     }
 
@@ -25,10 +25,6 @@ class Setup {
         await this.run('build_data');
         await this.run('save_data');
         await this.run('build_templates');
-    }
-
-    async test(){
-        await this.rebuild()
     }
 
     async rebuild(){
