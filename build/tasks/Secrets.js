@@ -1,4 +1,4 @@
-const CloudflareAPI = require('../../lib/CloudflareAPI')
+const CloudflareAPI = require('../../dist/lib/CloudflareAPI')
 class Secrets {
     constructor(){
         this.api = new CloudflareAPI()

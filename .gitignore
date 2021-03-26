@@ -6,3 +6,4 @@ tailed.logs
 dist
 .idea
 .DS_STORE
+dist

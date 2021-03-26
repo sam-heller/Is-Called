@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "outDir": "./dist",
+    "module": "commonjs",
+    "target": "esnext",
+    "lib": ["esnext", "webworker"],
+    "alwaysStrict": true,
+    "strict": true,
+    "preserveConstEnums": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "esModuleInterop": true,
+    "types": ["@cloudflare/workers-types", "@types/node", "./types/"]
+  },
+  "include": [
+    "./lib/*.ts",
+    "./workers-site/*.ts",
+    "./types/*.ts"
+  ],
+  "exclude": ["node_modules/", "dist/"]
+}

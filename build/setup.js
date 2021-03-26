@@ -1,23 +1,24 @@
-require('../lib/LoadConfig')
-require('../lib/over-engineering')
+require('../dist/lib/LoadConfig')
 const Secrets = require('./tasks/Secrets')
 const DataParser = require('./tasks/DataParser');
 const CloudflareUpdater = require('./tasks/CloudflareUpdater')
-const TemplateBuilder = require('./tasks/TemplateBuilder')
-const api = require('../lib/RandomAPIS')
-const CloudflareAPI = require('../lib/CloudflareAPI');
+// const TemplateBuilder = require('./tasks/TemplateBuilder')
+const api = require('../dist/lib/RandomAPIS')
+const CloudflareAPI = require('../dist/lib/CloudflareAPI');
 
 class Setup {
     async run(job){
+        let response = new Response('failed', {})
         switch(job){
-            case 'build_data'      : await new DataParser().go();            break;
-            case 'save_data'       : await new CloudflareUpdater().go();     break;
-            case 'build_templates' : await new TemplateBuilder().go();       break;
-            case 'save_secrets'    : await new Secrets().go();               break;
+            case 'build_data'      : response = await new DataParser().go();            break;
+            case 'save_data'       : response = await new CloudflareUpdater().go();     break;
+            case 'build_templates' : response = await new TemplateBuilder().go();       break;
+            case 'save_secrets'    : response = await new Secrets().go();               break;
             case 'image_update'    : await this.rebuild();                   break;
             case 'all'             : await this.runAll();                    break;
             default: console.log(`Unknown step ${job}`); await this.test();  break;
         }
+        console.log("Response from job is ", response, await response.text())
     }
 
     async runAll(){
@@ -32,8 +33,8 @@ class Setup {
         const animals = await cf2.getValue('animals', 'data')
         for (let key of animals){
             console.log(key, await cf2.putValue(`${key}.images`, await this.unsplash(key), 'data'))
+            obj
         }
-        
     }
 
     async unsplash(key){

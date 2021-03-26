@@ -2,8 +2,8 @@ const fs = require('fs')
 const nunjucks = require('nunjucks');
 const unsplash = require('unsplash-js')
 const minify = require('html-minifier').minify
-const CloudflareAPI = require('../../lib/CloudflareAPI')
-require('../../lib/over-engineering')
+// import {CloudFlareAPPI} from '../../lib/CloudflareAPI'
+
 class TemplateBuilder {
     unsplash_available = false
     

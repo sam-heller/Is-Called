@@ -1,5 +1,5 @@
 const fs = require('fs');
-const CloudflareAPI = require('../../lib/CloudflareAPI')
+const CloudFlareAPI = require('../../dist/lib/CloudflareAPI')
 
 /**
  * Class responsible for updating cloudflare records
@@ -7,13 +7,13 @@ const CloudflareAPI = require('../../lib/CloudflareAPI')
  class CloudflareUpdater {
     
     constructor() {
-        this.animals = JSON.parse(fs.readFileSync('build/animals.json'), 'utf-8');
-        this.api = new CloudflareAPI()
+        this.animals = JSON.parse(fs.readFileSync('build/data/animals.json'), 'utf-8');
+        this.api = CloudFlareAPI
     }
 
     async go() {
         let toData = [];
-        let animalNames = [];
+        let animalNames = {};
         for (let entry of this.animals) {
             for (let name of Object.keys(entry.animal)) {
                 toData.push({key: `${name}.infant`, value: JSON.stringify(entry.infant)});
@@ -21,12 +21,14 @@ const CloudflareAPI = require('../../lib/CloudflareAPI')
                 toData.push({key: `${name}.male`, value: JSON.stringify(entry.male)});
                 toData.push({key: `${name}.group`, value: JSON.stringify(entry.group)});
                 toData.push({key: `${name}.meat`, value: JSON.stringify(entry.meat)});
-                animalNames.push(name);
+                animalNames[name] = Object.entries(entry).filter((k)=> Object.entries(k[1]).length > 0).map((k) => k[0]);
             }
         }
         toData.push({key: 'animals', value: JSON.stringify(animalNames)});
         return await this.api.putBulk(toData)
     }
+
+    
 }
 
 module.exports = CloudflareUpdater

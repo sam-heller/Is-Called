@@ -2,7 +2,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Build the Data",
-  "main": "build/setup.js",
+  "main": "dist/workers-site/index.js",
   "scripts": {
     "build": "npm run buildData && npm run saveData",
     "buildData": "node build/setup.js build_data",
@@ -13,17 +13,21 @@
     "tail": "tail -f tailed.logs | ./node_modules/node-jq/bin/jq",
     "tail:all": "npm run tail '{\"ts\": .eventTimestamp, \"url\" : .event.request.url, \"outcome\" : .outcome, \"exceptions\" : .exceptions, \"logs\" : [.logs[].message[]]}'"
   },
+  "typings": "lib/Utility.d.ts",
   "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.1.1",
+    "dotenv": "^8.2.0",
     "html-minifier": "^4.0.0",
     "node-fetch": "^2.6.1",
-    "pluralize": "^8.0.0",
-    "dotenv": "^8.2.0"
+    "pluralize": "^8.0.0"
   },
   "devDependencies": {
-    "htmldom": "^4.0.11",
+    "@cloudflare/workers-types": "^2.2.1",
+    "@types/node": "^14.14.36",
     "bottleneck": "^2.19.5",
     "csv-parser": "^3.0.0",
     "flat": "^5.0.2",
+    "htmldom": "^4.0.11",
     "node-jq": "^1.12.0",
     "nodemon": "^2.0.7",
     "nunjucks": "^3.2.3",
