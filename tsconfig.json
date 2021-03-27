@@ -18,7 +18,9 @@
   "include": [
     "./lib/*.ts",
     "./workers-site/*.ts",
-    "./types/*.ts"
+    "./types/*.ts",
+    "./build/*.ts",
+    "./build/tasks/*.ts"
   ],
   "exclude": ["node_modules/", "dist/"]
 }

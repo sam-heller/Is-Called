@@ -26,7 +26,6 @@ require('dotenv').config()
         env['routes'] = env.routes.join(',')
         env = flatten(env)
         config = flatten(config)
-        console.log(config);
         for(let key of Object.entries(config)){Reflect.set(process.env, key, config[key])}
         for(let key of Object.entries(site)){Reflect.set(process.env, key, site[key])}
         for(let key of Object.entries(env)){Reflect.set(process.env, key, env[key])}

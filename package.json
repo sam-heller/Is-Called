@@ -3,27 +3,34 @@
   "version": "1.0.0",
   "description": "Build the Data",
   "main": "dist/workers-site/index.js",
+
   "scripts": {
     "build": "npm run buildData && npm run saveData",
-    "buildData": "node build/setup.js build_data",
-    "saveData": "node build/setup.js save_data",
-    "setup": "node build/setup.js",
+    "buildData": "node dist/build/setup.js build_data",
+    "saveData": "node dist/build/setup.js save_data",
+    "setup": "node dist/build/setup.js",
+    "test": "node dist/build/setup.js test",
     "dev": "nodemon",
     "startLogs": "killall -HUP wrangler & wrangler tail | sed -e 's/\\\\\\\"//g' > tailed.logs &",
     "tail": "tail -f tailed.logs | ./node_modules/node-jq/bin/jq",
-    "tail:all": "npm run tail '{\"ts\": .eventTimestamp, \"url\" : .event.request.url, \"outcome\" : .outcome, \"exceptions\" : .exceptions, \"logs\" : [.logs[].message[]]}'"
+    "tail:all": "npm run tail '{\"ts\": .eventTimestamp, \"url\" : .event.request.url, \"outcome\" : .outcome, \"exceptions\" : .exceptions, \"logs\" : [.logs[].message[]]}'",
+    "netreq": "curl http://127.0.0.1:8787/?t=bear&n=group"
   },
   "typings": "lib/Utility.d.ts",
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.1.1",
+    "@types/pluralize": "0.0.29",
     "dotenv": "^8.2.0",
     "html-minifier": "^4.0.0",
     "node-fetch": "^2.6.1",
-    "pluralize": "^8.0.0"
+    "pluralize": "^8.0.0",
+    "typescript-json-serializer": "^3.2.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^2.2.1",
     "@types/node": "^14.14.36",
+    "@types/node-fetch": "^2.5.8",
+    "@types/nunjucks": "^3.1.4",
     "bottleneck": "^2.19.5",
     "csv-parser": "^3.0.0",
     "flat": "^5.0.2",

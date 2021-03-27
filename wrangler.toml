@@ -2,7 +2,11 @@ type = "webpack"
 account_id = "93ff523463821408b1e16cb2a064f3c7"
 workers_dev = true
 name="is-called"
-kv_namespaces = [  { binding = "CALLED", id = "e2ad63645fb440739b4166a1c077dff2", preview_id="7efde571ad4a47eb864eca59f3b19273"},  { binding = "MSG_QUEUE", id = "cc91fadb56c04e54b3c99300e83f28f9", preview_id="cc91fadb56c04e54b3c99300e83f28f9"},{ binding = "__STATIC_CONTENT", id = "b834198869444f92b04cffb66d0d818b", preview_id="698070676d85428d8db3a08403d79a3c"}]
+kv_namespaces = [  
+    { binding = "CALLED", id = "7efde571ad4a47eb864eca59f3b19273", preview_id="7efde571ad4a47eb864eca59f3b19273"},  
+    { binding = "MSG_QUEUE", id = "cc91fadb56c04e54b3c99300e83f28f9", preview_id="cc91fadb56c04e54b3c99300e83f28f9"},
+    { binding = "__STATIC_CONTENT", id = "698070676d85428d8db3a08403d79a3c", preview_id="698070676d85428d8db3a08403d79a3c"}
+]
 
 [site]
 bucket = "./public"
@@ -11,10 +15,16 @@ entry-point = "./"
 [env.production]
 zone_id = "987cf8f21aadb44283455a6d5ca2183d"
 routes = ["iscalled.com/*", "what.iscalled.com/*","*.meat.iscalled.com/*", "*.male.iscalled.com/*", "*.female.iscalled.com/*", "*.group.iscalled.com/*", "*.infant.iscalled.com/*"]
-kv_namespaces = [  { binding = "CALLED", id = "e2ad63645fb440739b4166a1c077dff2"},  { binding = "MSG_QUEUE", id = "cc91fadb56c04e54b3c99300e83f28f9"},{ binding = "__STATIC_CONTENT", id = "b834198869444f92b04cffb66d0d818b"}]
+kv_namespaces = [  { binding = "CALLED", id = "e2ad63645fb440739b4166a1c077dff2", preview_id="e2ad63645fb440739b4166a1c077dff2"},
+    { binding = "MSG_QUEUE", id = "cc91fadb56c04e54b3c99300e83f28f9", preview_id="cc91fadb56c04e54b3c99300e83f28f9"},
+    { binding = "__STATIC_CONTENT", id = "b834198869444f92b04cffb66d0d818b", preview_id="b834198869444f92b04cffb66d0d818b"}]
 
 [env.staging]
 name = "are-called"
 zone_id = "b987a4fb83d3bb403107b8a8cdda3226"
 routes = ["arecalled.com/*", "what.arecalled.com/*","*.meat.arecalled.com/*", "*.male.arecalled.com/*", "*.female.arecalled.com/*", "*.group.arecalled.com/*", "*.infant.arecalled.com/*"]
-kv_namespaces = [  { binding = "CALLED", id = "e2ad63645fb440739b4166a1c077dff2"},  { binding = "MSG_QUEUE", id = "cc91fadb56c04e54b3c99300e83f28f9"},{ binding = "__STATIC_CONTENT", id = "b834198869444f92b04cffb66d0d818b"}]
+kv_namespaces = [  
+    { binding = "CALLED", id = "7efde571ad4a47eb864eca59f3b19273", preview_id="7efde571ad4a47eb864eca59f3b19273"},
+    { binding = "MSG_QUEUE", id = "cc91fadb56c04e54b3c99300e83f28f9", preview_id="cc91fadb56c04e54b3c99300e83f28f9"},
+    { binding = "__STATIC_CONTENT", id = "4619576087d745ab904dfc6e524f0a2a", preview_id="4619576087d745ab904dfc6e524f0a2a"}
+]

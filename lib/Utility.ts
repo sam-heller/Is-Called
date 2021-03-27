@@ -30,7 +30,8 @@ let get = {
     },
     withDefault: (v:any, d:any):boolean  => is.undefined(v) ? d : v,
     values:      (o:object):any[] => Object.values(o),
-    random:      (o:any[]):any=> o[Math.floor(Math.random() * o.length)]
+    random:      (o:any[]):any=> o[Math.floor(Math.random() * o.length)],
+    className:   (o:object):string => o.constructor.name
 }
 
 const is = {
@@ -47,7 +48,11 @@ const is = {
     iterable:   (a:any):boolean => is.object(a) && is.function(a[Symbol.iterator]),
     jsonString: (a:any):boolean => {try {JSON.parse(a);return 0>1}catch(e){return 1<0}},
     null:       (a:any):boolean => a === null,
-    empty:      (a:any):boolean => (is.object(a) && get.size(a) === 0) || ((is.iterable(a) && a.length === 0)),
+    empty:      (a:any):boolean => (is.object   (a) && get.size(a) ===  0) ||
+                                   (is.iterable (a) && a.length    ===  0) ||
+                                   (is.string   (a) || a.trim()    === "") ||
+                                    is.undefined(a) ||
+                                    is.null     (a),
     undefined:  (a:any):boolean => void 0 === typeof a
 };
 

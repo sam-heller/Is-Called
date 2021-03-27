@@ -26,7 +26,6 @@ class CloudflareAPI {
         for (let key of Object.keys(this.endpointConfig)){
             let values = get.byKey(this.endpointConfig, key, []).map((key:string) => process.env[key])
             let endpoint = values.shift()
-            console.log(process.env)
             Reflect.set(this.endpoints, key, util.format(endpoint, ...values))
         }
 
@@ -46,6 +45,7 @@ class CloudflareAPI {
     async putBulk(data:object):Promise<Response>
     {
         let url = get.byKey(this.endpoints, 'bulk_update')
+        console.log("Bulk Update Enpoint is ", url)
         let options = {method: 'PUT',headers: get.byKey(this.headers,'json'),body: get.jsonString(data)}
         return await this.fetch(url, options)
     }
@@ -85,5 +85,4 @@ class CloudflareAPI {
         
     }
 }
-export = new CloudflareAPI()
-// export{CloudflareAPI}
+export {CloudflareAPI}
